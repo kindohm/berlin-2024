@@ -1,0 +1,30 @@
+
+d1
+  $ every 3 (rev) 
+  $ fast 2 
+  $ every 2 (|+ note "12") 
+  $ (|+ note "-2") 
+  $ note "0 4 7 11 12 16 19 23"
+  # s "syntakt" # midichan 0 # amp 1
+  # cps (170/120/2)
+
+d2 
+  $ sb 0.25 (off "1s" (|+ note "{12 -12}%12"))
+  $ fast 2
+  $ degradeBy 0.1
+  $ struct "1(3,8)"
+  $ s "syntakt" # midichan 1 # note "gs5" # amp 1
+
+
+
+d3
+  $ stack [
+    rep 10 $ midichan "{0/4 ~ ~ ~ ~}%4" # note "c3"
+    , (0.5 ~>) $ midichan "1" # note "c3"
+    , rarely (0.125 ~>) $ shift $ midichan "{~ ~ ~ 3 ~ ~ ~}%2" # note "c3"
+    , midichan "{8*4 8*2 [9 ~ ~ 9] 8 ~ ~ ~}%4" # note "c3"
+    , midichan "10/16" # note "c3"
+    , midichan "~ [~ 11/6] ~ ~" # note "c3"
+  ] # s "rytm" # amp 1
+
+hush

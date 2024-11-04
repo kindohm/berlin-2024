@@ -1,0 +1,7 @@
+let
+  g p = (const $ s "~") $ p
+  sb = sometimesBy
+  ssb = someCyclesBy
+  rep x p = stutWith x "3e" id $ p
+  shift p = (1 ~>) $ p
+  shiftBy x p = (x ~>) $ p

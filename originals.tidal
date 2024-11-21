@@ -1,0 +1,376 @@
+
+  -- jw333333333
+
+hush
+
+-- favorites
+13
+11 --recorded
+10 -- recorded
+07 (harmor) --redorded
+6 -- recorded
+5! -- recorded
+4 -- recorded
+3 -- recorded
+
+-- no
+08?
+12?
+
+
+-- kit 13
+
+do
+  let g = const $ s "~"
+  d1
+    $ sometimesBy 0.25 (ply 2) 
+    $ stack [
+      degradeBy 1 $ select (segment (range 0.7 8 $ slow 12 $ perlin) $ choose [0,1]) [
+        stack [
+          -- kick
+          struct "1(3,8,3)" $ midichan 2 # note "c3" # amp 1
+          -- deep snare
+          , sometimesBy 0.2 (off "3e" id) 
+            $ (0.5 ~>) $ midichan 5 # note "c3" # amp 1
+          -- hat
+          , foldEvery [3,4] (fast (4/3)) 
+            $ fast 2 $ midichan 8 # note "c3" # amp 1
+        ]
+        , stack [
+          -- snare 2
+          off "{3e 3s}%13" id $ midichan 3 # note "c3" # amp 1
+          -- perc
+          , foldEvery [2,3] (slow (4/3)) 
+            $ midichan "{6 7 7 6 7 7 6 7 6}%8" # note "c3" # amp 1
+        ]
+      ]
+      -- ostinato
+      , g $ fast 8 $ midichan 0 # note "c3" # amp (range 0.5 1 $ (11 ~>) $ rand)
+      -- arp
+      , slow 6 $ midichan 1 # note "c3" # amp 1
+      -- intro
+      , g $ foldEvery [3,5,7] (slow (4/3)) $ fast 8 $ midichan 4 # note "c3" # amp 1
+    ] # s "rytm" # cps 0.777
+
+hush
+
+
+--kit12
+
+do
+  d1
+    $ every 4 (mask "1 0")
+    $ chunk 4 (slow 2)
+    $ whenmod 8 5 (iter 8)
+    $ stripe 2
+    $ sometimesBy 0.4 ("1s" ~>)
+    $ (1 ~>)
+    $ while "{1 0 0 0 0 1 0 0 0 0 0 0 0 0 0}%16" (ply "{2 3 4}%16")
+    $ stack [
+      midichan "2 [3 8/2]" # note "c3" # amp 1
+      , slow 7 $ midichan 0 # note "c3" # amp 1
+      --, (|+ note "-24") $ mask "{1 0 0 1 1 0 0 0 0 0}%4" 
+      --  $ amp "1@3 1@2 1 1 1" # midichan "{5 6 7}%16" # note (scale "ritusen" (choose [-5,-4..5])) # amp 1
+    ] # s "rytm" # cps 0.4
+  d2
+    $ slow 4 $ midichan 1 # note "c3" # amp 1 # s "rytm"
+  d3
+    $ degradeBy 0.2 $ fast 2 $ midichan 5 # note "c3" # amp 1 # s "rytm"
+
+
+hush
+
+-- kit11
+
+do
+  let g = const $ s "~"
+  d1
+    -- $ foldEvery [2,3,4,5,6] (slow (4/3))
+    $ whenmod 30 20 (chunk 8 (stripe 2))
+    $ whenmod 20 10 (chunk 4 (iter 8))
+    $ stack [
+      -- main drums
+      (|* amp (range 0.5 1 $ rand)) 
+        $ mask "{1 1 1 0}%2"
+        $ while (foldEvery [2,3] (id) $ "{1 0 0 0 0  0 0 0 0}%2") (|+ midichan (while "{1 1  0 0 0 0 0  0 0 0 0 0}%2" (|+ "4") $ "4"))
+        $ amp "1(5 [3 2]/2 [5 2]/2 [3 1]/2, 16, 0 0 3)" # midichan ("{1 2 3 1 [2 3]/2}%16") # note "c3" 
+      -- bass acid stab thing
+      , whenmod 16 8 g $ every "<7 9>" (off "1s" (# midichan 4)) 
+        $ struct "1(9 12 0 0, 16, <0 1 0 1 5>)" $ midichan 0 # note "c3" # amp 1
+      -- pings
+      , sometimesBy 0.25 (off "3s" id) 
+        $ ("3s" ~>) $ slow "<4 6>" $ midichan 8 # note "c3" # amp 1
+    ] # s "rytm" # cps 0.7
+
+
+hush
+
+-- kit 10
+do
+  let g = const $ s "~"
+  d1
+    $ chunk 4 (stripe "1 2")
+    $ mask "{1 1 1 1 1 1 1 0}%4"
+    $ iter 24
+    $ stripe 2
+    $ stack [
+      -- perc
+      (|* amp (range 0.4 1 $ (3 ~>) $ rand)) 
+        $ amp "{1 0.4 0.4 0.4 0.4 1 0.4 0.4 0.4}%8" # midichan "10*8" # note "c3"
+      -- kick
+      , ("1e" ~>) $ slow 2 $ midichan 0 # note "c3" # amp 1
+      -- snare
+      , (0.5 ~>) $ midichan 1 # note "c3" # amp 1
+    ] # s "rytm" # cps 0.5
+  d2
+    -- stabs
+    $ (0.25 ~>) $ slow 8 $ s "rytm" # midichan 2 # note "{c3 c2 c4}%16" # amp 1
+  d3
+    -- noisey backbeat
+    $ (0.5 ~>) $ s "rytm" # midichan 3 # note "c3" # amp 1
+
+hush
+
+-- kit09
+
+do
+  let pat = "{0 0@3 1@4 0@2 0@5 1@5 0 1@10}%16"
+  d1
+    $ chunk 4 rev
+    $ while "{1 0 0 0 0 0}%4" (slow 2)
+    $ while "{1 0 0 0 0 0 0 0 0 0}%5" (slow 2)
+    $ stack [
+      struct (inv pat) $ midichan 2 # note "c3" # amp 1
+      , (|+ note "{0 1 -1}%16") $ struct pat $ midichan 3 # note "c3" # amp 1
+      , (# legato (range 0.3 1.2 $ (3 ~>) $ rand)) 
+        $ while "{1 1 0 0 1 0}%16" (off "1s" id) 
+        $ while "{1 0 0 1 0}%16" (off "1s" id) 
+        $ ("1s" ~>) $ struct (inv pat) $ midichan 8 # note "c3" # amp 1
+      , slow "<3 1.25 2>" 
+        $ while "{1 0 0 0 0}%16" (off "3q" (|+ note 5))
+        $ (|+ note "-24") 
+        $ midichan 0 # note (scale "chromatic" "{0 1 -1 2 -2 3 -3}%16") # amp 1
+    ] # s "rytm" # cps 0.7
+
+
+    hush
+
+-- kit08
+do
+  d1
+    $ chunk 4 (stripe 2)
+    $ mask "{1 1 1 1 1 1 0 [0 1]/3}%8"
+    $ stack [
+      s "rytm(<3 1 2>,<8 16>,<0 1 3 7>)" # midichan "{2 3}%13" # amp 1 # note "c3"
+      , (|+ note "-24") 
+        $ mask "{1 1 0 0 0 0}%1" $ midichan "1@3 1@2 1@3" # note (scale "chromatic" "{0 1 -1 2 -2 3 -3}%16") # amp 1 # legato 1.5
+    ] # s "rytm" # cps 0.8
+  d2
+    $ sometimesBy 0.3 ("1q" <~)
+    $ (0.5 ~>) $ midichan 5 # note "c3" # amp 1 # s "rytm"
+
+  d3
+    $ slow 12 $ midichan 0 # note "c3" # amp 1 # s "rytm" # legato 0.5
+
+hush
+
+-- kit07
+do
+  let g = const $ s "~"
+  d1
+    $ every 10 (linger "1s")
+    $ foldEvery [2,3,5] (slow (4/3))
+    $ stack [
+      slow "1.25 [0.5 [0.3 0.6]/2]/3" $ midichan "10*9" # note "c3" # amp (id $ range 0.05 1 $ saw)
+      , fast 4 
+        $ foldEvery [2,3,4] (slow (4/3)) 
+        $ mask "{1 0 0 0 0 0 0 0 0 0}%2" 
+        $ every 7 rev $ midichan "2 3 ~ ~" # note "c3" # amp 1
+    ] # s "rytm" # cps 0.6
+  d2
+    $ (|+ note "<-24>")
+    $ mask "<1 0 0 0>" $  midichan "0*4 ~" # s "rytm"  # note (scale "chromatic" (choose [-12,-11..12])) # amp 1
+    # nudge (range (-0.1) 0.1 $ rand)
+  d3
+    -- backbeat
+    $ degradeBy 0.3
+    $ (0.5 ~>) $ s "rytm" # midichan 5 # note "c3" # amp 1
+  d4 
+    $ id
+    $ slow 11 $ s "harmor" # midichan 0 # note "c5" # amp 1 # legato (range 0.5 0.8 $ (3 ~>) $ rand)
+
+
+hush
+
+-- kit06
+do
+  let pat = "{1 1@2 1 1@2 1 1@6 -5@13}%16"
+  let g = const $ s "~"
+  d1
+    $ whenmod 20 10 (chunk 4 (slow 2))
+    $ mask "{1 1 1 1 1 1 [1 0]/3 [1 0 0]/2 0}%4"
+    $ stack [
+      -- kick
+      (|+ note "-24") $ note pat # midichan 5 # amp 1
+        # legato "{1 0.8 1 1 1 1 1 1 1}%16"
+      -- perc
+      , someCyclesBy 0.4 (slow (4/3)) $ (1 ~>) $ someCyclesBy 0.4 (slow (4/3))
+        $ midichan "{2 3 2 2 3 2 2 3}%16" # note "c3" # amp 1
+      -- snare
+      ,  midichan "{0@5 0 1@9 1}%16" # note "c3" # amp 1
+    ] # s "rytm" # cps 0.4
+  d2
+    -- pad
+    $ slow 11 $ midichan 4 # note "c3" # s "rytm" # amp 1
+      # legato "<0.6 0.7 0.5 0.6>" # nudge (range (-2) 2 $ (3 ~>) $ rand)
+  -- anchor
+  d3 $ (0.25 <~) $  slow 2 $ s "rytm" # midichan 6 # note "c3" # amp 1
+
+hush
+
+  d3
+    $ slow 13.3341 $ midichan 8 # note "c3" # amp 1 # legato 0.3 # s "rytm"
+
+
+hush
+
+-- kit05
+do
+  d1
+    $ iter 24
+    $ stripe "<2 2 2 2 2 2 4>"
+    $ sometimesBy 0.2 (off "{3s 3s 3e}%16" id)
+    $ (1 ~>)
+    $ sometimesBy 0.2 (ply 2)
+    $ (1 ~>)
+    $ sometimesBy 0.2 ("1s" ~>)
+    $ (1 ~>)
+    $ stack [
+      midichan "2 3" # note "c3" # amp 1
+      , slow 1.5 $ struct "1*2 [~ 1]" $ midichan 10 # note "c3" # amp 1
+    ] # s "rytm" # cps (100/120/2)
+  d2 
+    $ iter 32
+    $ fast 2
+    $ (0.5 ~>)
+    $ midichan 8 # note "c3" # amp 1 # s "rytm"
+  d3
+    $ sometimesBy 0.4 (|+ note "12") 
+    $ (1 ~>)
+    $ sometimesBy 0.4 (|+ note "-12") 
+    $ (|+ note "-24")
+    $ slow 12.8923 $ midichan 4 # note (scale "ritusen" "{0 1 -1 2 -2}%16") 
+    # amp 1 # s "rytm" # legato (range 0.3 0.5 $ (31 ~>) $ rand)
+
+-- kit04
+do
+  let pat = "{0 1@4 0 0 1@3 0 0@7 0 1@4 0 0 1@4 0@4 0@14}%16"
+      scl = "{0 1@4 -1 0 -2@3 1 2@7 -1 -3@4 -2 -3 -2@4 -1@4 -4@14}%16"
+      g = const $ s "~"
+  d1
+    $ every 2 (chunk 3 (iter 8))
+    $ stack [
+      -- anchor hat
+      (0.5 ~>) $ midichan 8 # note "c3" # amp 1
+      -- kick
+      , struct (inv pat) $ midichan 2 # note "c3" # amp 1
+      -- snare
+      , struct pat $ midichan 3 # note "c3" # amp 1
+      -- pads
+      , slow 7.1333 $ midichan "[4,5]" # note "c3" # amp 1
+      -- basses
+      , degradeBy 0.3 $ (|+ note "-24") $ struct pat $ midichan 0 # note ((scale "ritusen" scl)) # amp 1 # legato (range 0.7 1 $ (3 ~>) $ rand)
+      , g $ degradeBy 0.3 $ (|+ note "-24") $ struct (inv pat) $ midichan 0 # note (scale "ritusen" scl) # amp 1 # legato (range 0.7 1 $ (3 ~>) $ rand)
+      -- spikey
+      , g $ degradeBy 0 $ (|+ note "{-24 }%19") 
+        $ mask "{1*4 0 0 0 0 1*2 0 0 1*4 0 0 0}%4"
+        $ amp "{1*4}%4" # midichan 1 # note "c3"
+    ] # s "rytm" # cps 0.6
+
+hush
+
+  d2
+    $ (|+ note "-24")
+    $ slow 6
+      $ s "rytm" # midichan 1 # note (scale "ritusen" scl) # amp 1 # legato 0.6
+
+hush
+
+-- simpler kit03
+do
+  let g = const $ s "~"
+  d1
+    $ foldEvery [4,8,11,12] (|* cps 1.25)
+    $ foldEvery [3,5,7,9,10,6] (|* cps 0.75)
+    $ stack [
+      chunk 4 (stripe 2)
+        $ while "{1 0 0 0 0 0 0}%16" (ply "{2 3 4}%16")
+        $ sometimesBy 0.1 ("1s" ~>)
+        $ midichan "2 3" 
+        # amp 1 # note "{c3 c3 c3 c3 d3 c3 c3 e3 c3 c3 a2 c3}%16"
+      -- spiky pad
+      , slow 11.333 $ midichan 0 # note "c3" # amp 0.9 # legato "{0.3 0.4 0.3 0.2 0.1}%16"
+      , foldEvery [2,3,4] (fast 1.5) $ ccn 37 # ccv (range 0 80 $ (3 ~>) $ rand) # midichan 2
+      , foldEvery [2,3,4,5] (fast 1.6) $ ccn 39 # ccv (range 0 127 $ (3 ~>) $ rand) # midichan 2
+      , foldEvery [2,3,4,6] (fast 1.3) $ ccn 42 # ccv (range 0 80 $ (3 ~>) $ rand) # midichan 2
+      , foldEvery [2,3,4,7] (fast 1.7) $ ccn 43 # ccv (range 0 127 $ (3 ~>) $ rand) # midichan 2
+      -- bass
+      , g $ sometimesBy 0.3 (|+ note "{0}%16") 
+        $ struct (binaryN 16 "<82934 1236784 3408639 213748234>") $ midichan 1 # note "c3" # amp 1
+    ] # s "rytm" # cps 0.666
+  d2
+    -- backbeat
+    $ id
+    $ (0.5 ~>) $ s "rytm" # midichan 10 # note "c3" # amp 1
+  d3
+    -- cant 
+    $ id
+    $ slow 8 $ s "rytm" # midichan 4 # note "c3" # amp 1 # legato 0.7
+
+hush
+
+  d1
+    $ chunk 4 (stripe 2)
+      $ while "{1 0 0 0 0 0 0}%16" (ply "{2 3 4}%16")
+      $ sometimesBy 0.1 ("1s" ~>)
+      $ midichan "2 3" 
+      # amp 1 
+      # note "{c3 c3 c3 c3 d3 c3 c3 e3 c3 c3 a2 c3}%16"
+      # s "rytm" 
+      # cps 0.666 
+
+-- kit 01
+d1 
+  $ (|* amp (range 0.5 1 $ (37 ~>) $ rand))
+  $ (1 ~>)
+  $ someCyclesBy 0.2 (linger "1s")
+  $ (1 ~>)
+  $ someCyclesBy 0.3 (rev)
+  $ (1 ~>)
+  $ someCyclesBy 0.3 (iter 8)
+  $ (1 ~>)
+  $ sometimesBy 0.3 (slow 2)
+  $ (1 ~>)
+  $ sometimesBy 0.1 (|+ note "{1 2 3 -1 -2 -3}%16")
+  $ (1 ~>)
+  $ degradeBy (range 0 0.9 $ slow 15 $ (33 ~>) $ perlin)
+  $ (1 ~>)
+  $ stack [
+    ("1s" ~>) $ slow 8 $ midichan 4 # note "c3" # amp 1
+    , slow 4 $ midichan 0 # note "c3" # amp 1
+    , struct "1({1 3 2}%16,8,{0 4 6 3}%16)" $ midichan 1 # note "c3" # amp 1
+    , sometimesBy 0.3 ("<1s 2s>" ~>) $ (0.5 ~>) $ (1 ~>) 
+      $ degradeBy 0.8 $ midichan "{2 3 3}%16" 
+      # note "c3" # amp 1 # legato (range 0.2 0.5 $ (1 ~>) $ rand)
+    , degradeBy 0.8 $ (3 ~>) $ midichan "{5 6 5 7 6}%16" # note "c3" # amp 1
+    , sometimesBy 0.5 (off "{3s 3e 3s}%16" id) 
+      $ (1 ~>)
+      $ degradeBy 0.7 $ (45 ~>) $ midichan "{8 9 10 11 10 9 8}%16" # note "c3" # amp 1
+  ] # s "rytm" # cps 0.666
+
+-- kit 02
+
+hush
+
+
+d1 $ fast 3 $ s "mod" # note "c5" # ccn 1 # ccv 55 # midichan 0  # cps (120/120/2)

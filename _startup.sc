@@ -31,6 +31,13 @@ s.waitForBoot {
 			"😍 added harmor".postln;
 		});
 
+		if (item.name == "Bus 2", {
+			~harmor2Out = MIDIOut.newByName("IAC Driver", "Bus 2");
+			~harmor2Out.latency = 0;
+			~dirt.soundLibrary.addMIDI(\harmor2, ~harmor2Out);
+			"😍 added harmor2".postln;
+		});
+
 		if (item.device == "MIDI 1U", {
 			~modOut = MIDIOut.newByName("MIDI 1U", "MIDI 1U");
 			~modOut.latency = 0;
@@ -52,7 +59,7 @@ s.waitForBoot {
 			"😍 added Syntakt".postln;
 		});
 
-		if (item.device == "Midi Fighter Twister", {
+		if (item.device == "Midi Fighter Twister 4", {
 			"attempting to connect to MIDI input to Midi Fighter Twister".postln;
 			"going for device at index".catArgs(" ").catArgs(1).catArgs(", ").catArgs("whatever it is:").postln;
 			MIDIClient.sources.at(i).device.catArgs(" ").catArgs(MIDIClient.sources.at(i).name).postln;

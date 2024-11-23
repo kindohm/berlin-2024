@@ -1,0 +1,26 @@
+-- kit 10
+do
+  let g = const $ s "~"
+  d1
+    $ (100 ~>)
+    $ chunk 4 (stripe "1 2")
+    $ mask "{1 1 1 1 1 1 1 0}%4"
+    $ iter 24
+    $ stripe 2
+    $ stack [
+      -- perc
+      (|* amp (range 0.4 1 $ (3 ~>) $ rand)) 
+        $ amp "{1 0.4 0.4 0.4 0.4 1 0.4 0.4 0.4}%8" # midichan "10*8" # note "c3"
+      -- kick
+      , ("1e" ~>) $ slow 2 $ midichan 0 # note "c3" # amp 1
+      -- snare
+      , (0.5 ~>) $ midichan 1 # note "c3" # amp 1
+    ] # s "rytm" # cps 0.5
+  d2
+    -- stabs
+    $ (0.25 ~>) $ slow 8 $ s "rytm" # midichan 2 # note "{c3 c2 c4}%16" # amp 1
+  d3
+    -- noisey backbeat
+    $ (0.5 ~>) $ s "rytm" # midichan 3 # note "c3" # amp 1
+
+hush

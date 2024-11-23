@@ -1,0 +1,33 @@
+-- kit05
+do
+  d1
+    $ iter 24
+    $ sometimesBy 0 (stripe "<2 3 4>")
+    $ sometimesBy 0.4 (off "{3s 3s 3e }%16" id)
+    $ (1 ~>)
+    $ sometimesBy 0.2 (ply 2)
+    $ (1 ~>)
+    $ sometimesBy 0.2 ("1s" ~>)
+    $ (1 ~>)
+    $ stack [
+      midichan "2 3" # note "c3" # amp 1
+      , slow 1.5 $ struct "1*2 [~ 1]" $ midichan 10 # note "c3" # amp 1
+    ] # s "rytm" # cps (100/120/2)
+  d2 
+    $ iter 32
+    $ fast 2
+    $ (0.5 ~>)
+    $ midichan 8 # note "c3" # amp 1 # s "rytm"
+  -- main pad
+  d3
+    $ sometimesBy 0.4 (|+ note "12") 
+    $ (1 ~>)
+    $ sometimesBy 0.4 (|+ note "-12") 
+    $ (|+ note "-24")
+    $ slow 12.8923 $ midichan 4 # note (scale "ritusen" "{0 1 -1 2 -2}%16") 
+    # amp 1 # s "rytm" # legato (range 0.3 0.5 $ (31 ~>) $ rand)
+
+hush
+
+
+d1 $ fast 2 $ s "rytm" # midichan 10 # note "c3" # amp 1

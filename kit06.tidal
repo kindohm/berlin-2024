@@ -1,0 +1,25 @@
+-- kit06
+do
+  let pat = "{1 1@2 1 1@2 1 1@6 -5@13}%16"
+  let g = const $ s "~"
+  d1
+    $ whenmod 20 10 (chunk 4 (slow 2))
+    $ mask "{1 1 1 1 1 1 [1 0]/3 [1 0 0]/2 0}%4"
+    $ stack [
+      -- kick
+      (|+ note "-24") $ note pat # midichan 5 # amp 1
+        # legato "{1 0.8 1 1 1 1 1 1 1}%16"
+      -- perc
+      , someCyclesBy 0.4 (slow (4/3)) $ (1 ~>) $ someCyclesBy 0.4 (slow (4/3))
+        $ midichan "{2 3 2 2 3 2 2 3}%16" # note "c3" # amp 1
+      -- snare
+      ,  midichan "{0@5 0 1@9 1}%16" # note "c3" # amp 1
+    ] # s "rytm" # cps 0.4
+  d2
+    -- pad
+    $ slow 9 $ midichan 4 # note "c3" # s "rytm" # amp 1
+      # legato "<0.6 0.7 0.5 0.6>" # nudge (range (-2) 2 $ (3 ~>) $ rand)
+  -- anchor
+  d3 $ (0.25 <~) $  slow 2 $ s "rytm" # midichan 6 # note "c3" # amp 1
+
+hush

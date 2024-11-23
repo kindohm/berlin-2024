@@ -1,0 +1,29 @@
+
+do
+  let g = const $ s "~"
+  let pat = "1(5 [3 2]/2 [5 2]/2 [3 1]/2, 16, 0 0 3)"
+  d1
+    -- $ foldEvery [2,3,4,5,6] (slow (4/3))
+    $ whenmod 30 20 (chunk 8 (stripe 2))
+    $ whenmod 20 10 (chunk 4 (iter 8))
+    $ stack [
+      -- main drums
+      (|* amp (range 0.5 1 $ rand)) 
+        $ mask "{1 1 1 0}%2"
+        $ while (foldEvery [2,3] (id) $ "{1 0 0 0 0  0 0 0 0}%2") (|+ midichan (while "{1 1  0 0 0 0 0  0 0 0 0 0}%2" (|+ "4") $ "4"))
+        $ amp pat # midichan ("{1 2 3 1 [2 3]/2}%16") # note "c3" # s "rytm" 
+      -- bass acid stab thing
+      , whenmod 16 8 g $ every "<7 9>" (off "1s" (# midichan 4)) 
+        $ struct "1(9 12 0 0, 16, <0 1 0 1 5>)" $ midichan 0 # note "c3" # amp 1# s "rytm" 
+      -- pings
+      , sometimesBy 0.2 (off "3s" id) $ (1 ~>) $ sometimesBy 0.333 (off "3s" id) 
+        $ ("3s" ~>) $ slow "<4 3>" $ midichan 8 # note "c3" # amp 1# s "rytm" 
+      , degradeBy 0.5 $ struct pat $ s "harmor" # midichan 10 # note "c5" # amp 1
+    ] # cps 0.7
+
+
+
+
+hush
+
+d1 $ degradeBy 0.5 $  fast 16 $ s "rytm" # midichan 10 # note "c3" # amp 1

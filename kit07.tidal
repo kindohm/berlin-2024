@@ -1,0 +1,26 @@
+-- kit07
+do
+  let g = const $ s "~"
+  d1
+    $ every 10 (linger "1s")
+    $ foldEvery [2,3,5] (slow (4/3))
+    $ stack [
+      slow "1.25 [0.5 [0.3 0.6]/2]/3" $ midichan "10*9" # note "c3" # amp (id $ range 0.05 1 $ saw)
+      , fast 4 
+        $ foldEvery [2,3,4] (slow (4/3)) 
+        $ mask "{1 0 0 0 0 0 0 0 0 0}%2" 
+        $ every 7 rev $ midichan "2 3 ~ ~" # note "c3" # amp 1
+    ] # s "rytm" # cps 0.6
+  d2
+    $ (|+ note "<-24>")
+    $ mask "<1 0 0 0>" $  midichan "0*4 ~" # s "rytm"  # note (scale "chromatic" (choose [-12,-11..12])) # amp 1
+    # nudge (range (-0.1) 0.1 $ rand)
+  d3
+    -- backbeat
+    $ degradeBy 0.3
+    $ (0.5 ~>) $ s "rytm" # midichan 5 # note "c3" # amp 1
+  d4 
+    $ id
+    $ slow 11 $ s "harmor" # midichan 0 # note "c5" # amp 1 # legato (range 0.5 0.8 $ (3 ~>) $ rand)
+
+hush

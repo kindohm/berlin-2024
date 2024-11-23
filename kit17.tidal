@@ -1,0 +1,23 @@
+do
+  let pat = "{1@3 1@3 1@6 1 1 1@5 0@4 1@2 1 1 1 1 1@3 1@3 1@3}%16"
+  d1
+    $ ssb 0.2 (while "1 0" $ const $ stack [ s "rytm" # midichan 1 # note "c3" # amp 1, s "harmor" # midichan "[4,5]" # amp 0.1 # note "c5"] # cps "<1 2 3 4>")
+    $ shift
+    $ ssb 0.5 (iter 8)
+    $ shift
+    $ ssb 0.5 rev
+    $ shift
+    $ sb 0.2 (off "3e" (|+ note "{12 -12}%13"))
+    $ stack [
+      struct pat $ s "rytm" # midichan 0 # note "c3" # amp 1
+      , struct (inv pat) $ s "rytm" # midichan 3 # note "c3" # amp 1
+      , struct pat $ s "harmor" # midichan 4 # note "c5" # amp 1
+      , struct (inv pat) $ s "harmor" # midichan 4 # note "c5" # amp 0.1
+      , degradeBy 0.333 $ struct (inv pat) $ s "harmor" # midichan 5 # note "c5" # amp 1
+      , struct (pat) $ s "harmor" # midichan 5 # note "c5" # amp 0.1
+      , sb 0.5 (off "1s" id) $ shift $ sb 0.5 (off "1s" id) $ ("1s" ~>) 
+        $ struct pat $ s "rytm" # midichan 8 # note "c3" # amp 1
+    ] # cps (165/120/2)
+
+
+    hush

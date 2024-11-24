@@ -21,6 +21,6 @@ do
     $ (0.5 ~>) $ s "rytm" # midichan 5 # note "c3" # amp 1
   d4 
     $ id
-    $ slow 11 $ s "harmor" # midichan 0 # note "c5" # amp 1 # legato (range 0.5 0.8 $ (3 ~>) $ rand)
+    $ slow 11 $ s "harmor" # midichan 0 # note "c5" # amp 1 # legato (range 0.5 0.9 $ (3 ~>) $ rand)
 
 hush

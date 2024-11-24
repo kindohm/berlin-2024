@@ -7,7 +7,7 @@ do
     $ every "<6>" (const $ s "rytm" # midichan 3 # note "c3" # amp 1 # cps 4)
     $ stack [
       -- add 5 and 10 to this one
-      plyWith "<25 10 15 10 15>" (|* amp 0.9) $ midichan "[0]" # note "c3" # amp 1 # s "rytm"
+      plyWith "<25 10 15 10 15>" (|* amp 0.9) $ midichan "[0,5,10]" # note "c3" # amp 1 # s "rytm"
       , (0.5 ~>) $ midichan 8 # note "c3" # amp 1 # s "rytm"
       , sb 0.3 (off "2e" (|+ note "{12 -12 12}%16")) 
         $ (|+ note "-24") 

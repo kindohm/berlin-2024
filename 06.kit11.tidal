@@ -18,7 +18,7 @@ do
       -- pings
       , sometimesBy 0.2 (off "3s" id) $ (1 ~>) $ sometimesBy 0.333 (off "3s" id) 
         $ ("3s" ~>) $ slow "<4 3>" $ midichan 8 # note "c3" # amp 1# s "rytm" 
-      , degradeBy 0.5 $ struct pat $ s "harmor" # midichan 10 # note "c5" # amp 1
+      , g $ degradeBy 0.7 $ struct pat $ s "harmor" # midichan 10 # note "c5" # amp 1
     ] # cps 0.7
 
 
